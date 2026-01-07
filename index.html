@@ -18,20 +18,26 @@
         .top-header { background-color: #166534; padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-color); }
         .top-header h1 { margin: 0; font-size: 20px; font-weight: 900; color: white; }
         .lang-switcher { background: var(--bg-dark); border: 2px solid white; color: white; padding: 4px 8px; border-radius: 8px; font-size: 15px; font-weight: 800; cursor: pointer; }
+        
         .container { max-width: 800px; margin: 0 auto; padding: 5px; box-sizing: border-box; min-height: 100vh; }
         .converter-box { border: 1px solid var(--border-color); padding: 30px 20px; background: var(--card-bg); border-radius: 12px; margin: 15px 0 5px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
-        .row { display: flex; flex-direction: column; margin-bottom: 18px; }
-        .row label { font-size: 16px; color: #cbd5e1; font-weight: 900; margin-bottom: 8px; }
-        .input-field, .select-field { padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 18px; font-weight: 800; width: 100%; box-sizing: border-box; background: #fff; color: #000; outline: none; }
-        .result-field { background: #f0fdf4 !important; color: #166534 !important; border-color: #22c55e !important; }
         
-        .rate-info { font-size: 14px; color: var(--accent-green); margin-top: 5px; font-weight: 700; text-align: center; }
+        .row { display: flex; align-items: center; margin-bottom: 18px; }
+        .row label { width: 140px; font-size: 17px; color: #cbd5e1; font-weight: 900; }
+        .input-field, .select-field { flex: 1; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 18px; font-weight: 800; width: 100%; box-sizing: border-box; height: 48px; background: #fff; color: #000; outline: none; }
+        .result-field { background: #f0fdf4 !important; color: #166534 !important; border-color: #22c55e !important; }
 
         .tools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0; }
         .tool-link { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-color); color: var(--accent-green); padding: 12px; border-radius: 8px; text-decoration: none; text-align: center; font-size: 13px; font-weight: 800; }
         .tool-link-wide { grid-column: span 2; }
 
         footer { border-top: 1px solid var(--border-color); padding: 25px 15px; text-align: center; font-size: 13px; color: #94a3b8; }
+        .footer-info-block { border: 2px solid var(--border-glow); border-radius: 12px; padding: 18px; margin-bottom: 15px; background: rgba(255, 255, 255, 0.05); }
+        .footer-link { color: var(--accent-green); text-decoration: underline; cursor: pointer; padding: 0 8px; font-weight: 900; }
+
+        .modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); overflow-y: auto; }
+        .modal-content { background: var(--card-bg); margin: 5% auto; padding: 25px; width: 90%; max-width: 600px; border-radius: 12px; position: relative; color: var(--text-light); border: 2px solid var(--border-glow); line-height: 1.6; }
+        .close-btn { position: absolute; right: 10px; top: 0; font-size: 38px; cursor: pointer; padding: 10px; }
     </style>
 </head>
 <body>
@@ -41,44 +47,53 @@
     <select class="lang-switcher" onchange="changeLang(this.value)" id="langSelect">
         <option value="en">English</option>
         <option value="uk">Українська</option>
+        <option value="es">Español</option>
+        <option value="de">Deutsch</option>
     </select>
 </div>
 
 <div class="container">
     <div class="converter-box">
+        <div class="row"><label id="lbl-amount">Amount:</label><input type="number" id="amount" class="input-field" value="100" oninput="calculate()"></div>
         <div class="row">
-            <label id="lbl-amount">Amount:</label>
-            <input type="number" id="amount" class="input-field" value="100" oninput="calculate()">
+            <label id="lbl-from">From:</label>
+            <select id="fromCurrency" class="select-field" onchange="calculate()">
+                <option value="USD">USD - US Dollar</option>
+                <option value="EUR">EUR - Euro</option>
+                <option value="GBP">GBP - British Pound</option>
+                <option value="UAH" selected>UAH - Hryvnia</option>
+                <option value="PLN">PLN - Polish Zloty</option>
+                <option value="CHF">CHF - Swiss Franc</option>
+                <option value="JPY">JPY - Yen</option>
+                <option value="CAD">CAD - Canadian Dollar</option>
+                <option value="AUD">AUD - Australian Dollar</option>
+                <option value="CNY">CNY - Yuan</option>
+                <option value="TRY">TRY - Lira</option>
+                <option value="CZK">CZK - Koruna</option>
+                <option value="HUF">HUF - Forint</option>
+                <option value="ILS">ILS - Shekel</option>
+                <option value="MDL">MDL - Leu</option>
+            </select>
+        </div>
+        <div class="row">
+            <label id="lbl-to">To:</label>
+            <select id="toCurrency" class="select-field" onchange="calculate()">
+                <option value="USD" selected>USD - US Dollar</option>
+                <option value="EUR">EUR - Euro</option>
+                <option value="GBP">GBP - British Pound</option>
+                <option value="UAH">UAH - Hryvnia</option>
+                <option value="PLN">PLN - Polish Zloty</option>
+                <option value="CZK">CZK - Koruna</option>
+            </select>
         </div>
         
-        <div style="display: flex; gap: 10px; margin-bottom: 18px;">
-            <div style="flex: 1;">
-                <label id="lbl-from">From:</label>
-                <select id="fromCurrency" class="select-field" onchange="calculate()">
-                    <option value="USD">USD</option>
-                    <option value="EUR">EUR</option>
-                    <option value="GBP" selected>GBP</option>
-                    <option value="UAH">UAH</option>
-                </select>
-            </div>
-            <div style="flex: 1;">
-                <label id="lbl-to">To:</label>
-                <select id="toCurrency" class="select-field" onchange="calculate()">
-                    <option value="USD" selected>USD</option>
-                    <option value="EUR">EUR</option>
-                    <option value="GBP">GBP</option>
-                    <option value="UAH">UAH</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="row">
-            <label id="lbl-converted">Result:</label>
+        <div class="row" style="margin-top:25px; border-top: 1px solid var(--border-color); padding-top: 20px;">
+            <label id="lbl-converted" style="color: var(--accent-green);">Result:</label>
             <input type="text" id="result" class="input-field result-field" readonly>
-            <div id="rateDisplay" class="rate-info"></div>
         </div>
     </div>
 
+    <h3 style="text-align: center; font-size: 14px; color: #64748b; text-transform: uppercase; margin-top: 30px;" id="txt-other">Other Tools</h3>
     <div class="tools-grid">
         <a href="#" class="tool-link" id="lnk-unit">Unit Converter</a>
         <a href="#" class="tool-link" id="lnk-perc">Percentage Calc</a>
@@ -91,21 +106,66 @@
 </div>
 
 <footer>
+    <div class="footer-info-block" id="footer-text"></div>
     <p>© 2025 SmartFinance.io</p>
+    <div style="margin-top:10px;">
+        <span class="footer-link" onclick="openPol('privacy')" id="link-privacy">Privacy</span>
+        <span class="footer-link" onclick="openPol('terms')" id="link-terms">Terms</span>
+    </div>
 </footer>
 
+<div id="siteModal" class="modal" onclick="if(event.target == this) closeModal()">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">×</span>
+        <div id="modalBody"></div>
+    </div>
+</div>
+
 <script>
-    // Базові курси відносно USD (приклад)
-    const ratesInUsd = {
-        "USD": 1,
-        "EUR": 0.92,
-        "GBP": 0.79,
-        "UAH": 41.50
+    // Курси відносно 1 USD (статична база для надійності)
+    const usdBaseRates = {
+        "USD": 1, "EUR": 0.92, "GBP": 0.79, "UAH": 41.50, "PLN": 4.02, 
+        "CHF": 0.88, "JPY": 149.50, "CAD": 1.35, "AUD": 1.52, "CNY": 7.19, 
+        "TRY": 31.20, "CZK": 23.40, "HUF": 362.50, "ILS": 3.65, "MDL": 17.85
     };
 
     const translations = {
-        en: { amount: "Amount:", from: "From:", to: "To:", converted: "Result:", rateIs: "1 unit =" },
-        uk: { amount: "Сума:", from: "З:", to: "В:", converted: "Результат:", rateIs: "1 одиниця =" }
+        en: {
+            amount: "Amount:", from: "From:", to: "To:", converted: "Result:",
+            other: "Other Tools", footer: "Currency Converter — fast and easy calculations.",
+            unit: "Unit Converter", perc: "Percentage Calc", vat: "VAT Calculator", loan: "Loan Calculator", 
+            disc: "Discount Calc", tip: "Tip Calculator", bmi: "BMI Calculator",
+            privacy: "Privacy Policy", terms: "Terms of Use",
+            privText: "<h2>Privacy</h2><p>Data stays in your browser.</p>",
+            termsText: "<h2>Terms</h2><p>Rates are for info only.</p>"
+        },
+        uk: {
+            amount: "Сума:", from: "З:", to: "В:", converted: "Результат:",
+            other: "Інші інструменти", footer: "Конвертер валют — швидкий та зручний розрахунок.",
+            unit: "Конвертер", perc: "Відсотки", vat: "Калькулятор ПДВ", loan: "Кредити", 
+            disc: "Знижки", tip: "Чайові", bmi: "Індекс маси тіла",
+            privacy: "Конфіденційність", terms: "Умови",
+            privText: "<h2>Конфіденційність</h2><p>Дані не зберігаються.</p>",
+            termsText: "<h2>Умови</h2><p>Курси мають ознайомчий характер.</p>"
+        },
+        es: {
+            amount: "Monto:", from: "De:", to: "A:", converted: "Resultado:",
+            other: "Otras herramientas", footer: "Conversor de divisas rápido.",
+            unit: "Convertidor", perc: "Porcentajes", vat: "IVA", loan: "Préstamos", 
+            disc: "Descuento", tip: "Propina", bmi: "IMC",
+            privacy: "Privacidad", terms: "Términos",
+            privText: "<h2>Privacidad</h2><p>Sin almacenamiento.</p>",
+            termsText: "<h2>Términos</h2><p>Solo informativo.</p>"
+        },
+        de: {
+            amount: "Betrag:", from: "Von:", to: "Zu:", converted: "Ergebnis:",
+            other: "Andere Tools", footer: "Währungsrechner — einfach und schnell.",
+            unit: "Konverter", perc: "Prozente", vat: "MwSt", loan: "Kredit", 
+            disc: "Rabatt", tip: "Trinkgeld", bmi: "BMI",
+            privacy: "Datenschutz", terms: "AGB",
+            privText: "<h2>Datenschutz</h2><p>Keine Speicherung.</p>",
+            termsText: "<h2>AGB</h2><p>Nur zur Information.</p>"
+        }
     };
 
     let curLang = localStorage.getItem('langCur') || 'en';
@@ -115,28 +175,48 @@
         const from = document.getElementById('fromCurrency').value;
         const to = document.getElementById('toCurrency').value;
         
-        // Математика: конвертуємо в USD, потім з USD в цільову валюту
-        const amtInUsd = amt / ratesInUsd[from];
-        const finalRes = amtInUsd * ratesInUsd[to];
+        // Математика: Сума / курс_джерела * курс_цілі
+        const res = (amt / usdBaseRates[from]) * usdBaseRates[to];
         
-        document.getElementById('result').value = finalRes.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) + " " + to;
-        
-        // Показуємо поточний курс для довідки
-        const singleRate = (1 / ratesInUsd[from]) * ratesInUsd[to];
-        document.getElementById('rateDisplay').innerText = `${translations[curLang].rateIs} ${singleRate.toFixed(4)} ${to}`;
+        document.getElementById('result').value = res.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) + " " + to;
     }
 
     function changeLang(lang) {
         curLang = lang;
         localStorage.setItem('langCur', lang);
-        document.getElementById('lbl-amount').innerText = translations[lang].amount;
-        document.getElementById('lbl-from').innerText = translations[lang].from;
-        document.getElementById('lbl-to').innerText = translations[lang].to;
-        document.getElementById('lbl-converted').innerText = translations[lang].converted;
+        updateUI();
+    }
+
+    function updateUI() {
+        const t = translations[curLang];
+        document.getElementById('langSelect').value = curLang;
+        document.getElementById('lbl-amount').innerText = t.amount;
+        document.getElementById('lbl-from').innerText = t.from;
+        document.getElementById('lbl-to').innerText = t.to;
+        document.getElementById('lbl-converted').innerText = t.converted;
+        document.getElementById('txt-other').innerText = t.other;
+        document.getElementById('footer-text').innerText = t.footer;
+        document.getElementById('link-privacy').innerText = t.privacy;
+        document.getElementById('link-terms').innerText = t.terms;
+        
+        document.getElementById('lnk-unit').innerText = t.unit;
+        document.getElementById('lnk-perc').innerText = t.perc;
+        document.getElementById('lnk-vat').innerText = t.vat;
+        document.getElementById('lnk-loan').innerText = t.loan;
+        document.getElementById('lnk-disc').innerText = t.disc;
+        document.getElementById('lnk-tip').innerText = t.tip;
+        document.getElementById('lnk-bmi').innerText = t.bmi;
         calculate();
     }
 
-    changeLang(curLang);
+    function openPol(type) {
+        const t = translations[curLang];
+        document.getElementById('modalBody').innerHTML = type === 'privacy' ? t.privText : t.termsText;
+        document.getElementById('siteModal').style.display = 'block';
+    }
+    function closeModal() { document.getElementById('siteModal').style.display = 'none'; }
+    
+    updateUI();
 </script>
 </body>
 </html>
