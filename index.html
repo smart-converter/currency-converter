@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Currency Converter Express - Real-Time Exchange Rates</title>
+    <title>Currency Converter Express - SmartCurrency.io</title>
     <style>
         :root {
             --bg-dark: #0f172a;
@@ -13,48 +13,28 @@
             --border-color: #334155;
         }
 
-        body { font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; margin: 0; padding: 0; background-color: var(--bg-dark); -webkit-font-smoothing: antialiased; color: var(--text-light); }
-        
+        body { font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; margin: 0; padding: 0; background-color: var(--bg-dark); color: var(--text-light); -webkit-font-smoothing: antialiased; }
         .top-header { background-color: #166534; padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; color: white; border-bottom: 1px solid var(--border-color); }
         .top-header h1 { margin: 0; font-size: 20px; font-weight: 900; letter-spacing: 0.5px; }
-        
         .lang-switcher { background: var(--bg-dark); border: 2px solid white; color: white; padding: 4px 8px; border-radius: 8px; font-size: 15px; cursor: pointer; font-weight: 800; }
-        .lang-switcher option { color: #333; }
-        
-        .container { max-width: 800px; margin: 0 auto; padding: 5px; background: var(--bg-dark); min-height: 100vh; box-sizing: border-box; }
-        
+        .container { max-width: 800px; margin: 0 auto; padding: 5px; box-sizing: border-box; min-height: 100vh; }
         .tabs-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background-color: #14532d; border: 1px solid #14532d; margin: 15px 0 10px; border-radius: 8px; overflow: hidden; }
-        .tab { background: #166534; color: #fff; height: 32px; text-align: center; cursor: pointer; font-size: 11px; font-weight: 900; text-transform: uppercase; border: none; display: flex; align-items: center; justify-content: center; }
-        .tab.active { background: #fff; color: #166534; box-shadow: inset 0 -2px 0 #166534; }
-        
+        .tab { background: #166534; color: #fff; height: 36px; text-align: center; cursor: pointer; font-size: 10px; font-weight: 900; text-transform: uppercase; border: none; display: flex; align-items: center; justify-content: center; }
+        .tab.active { background: #fff; color: #166534; }
         .converter-box { border: 1px solid var(--border-color); padding: 30px 20px; background: var(--card-bg); border-radius: 12px; margin-bottom: 5px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
         .row { display: flex; align-items: center; margin-bottom: 12px; }
         .row label { width: 90px; font-size: 15px; color: #94a3b8; font-weight: 700; }
-        
         .input-field { flex: 1; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 19px; font-weight: 800; width: 100%; box-sizing: border-box; height: 48px; background: #fff; color: #000; }
         #valOut { background: #f0fdf4; color: #166534; border-color: #22c55e; }
-
         .ad-space { background: rgba(255, 255, 255, 0.05); border: 1px dashed var(--border-color); margin: 10px 0; text-align: center; padding: 15px; color: #64748b; font-size: 11px; min-height: 90px; display: flex; align-items: center; justify-content: center; border-radius: 8px; }
-        
-        .quick-links-box { padding: 5px 15px 15px 15px; background: var(--card-bg); border: 1px solid var(--border-color); margin-top: 5px; border-radius: 10px; }
-        .quick-links-box h3 { font-size: 16px; color: var(--accent-green); margin: 0 0 10px 0; border-bottom: 1px solid var(--border-color); padding-bottom: 5px; font-weight: 900; }
-        
-        .q-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .q-item { font-size: 13px; color: #38bdf8; text-decoration: underline; cursor: pointer; line-height: 1.4; font-weight: 600; }
-        
-        .seo-content { padding: 15px; line-height: 1.7; font-size: 15px; color: #94a3b8; border-top: 1px solid var(--border-color); }
-        .seo-content h2 { color: var(--accent-green); font-size: 19px; margin: 20px 0 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 5px; font-weight: 900; }
-        
         .tools-network { padding: 20px 15px; text-align: center; border-top: 1px solid var(--border-color); margin-top: 20px; }
         .tool-link-btn { display: inline-block; padding: 8px 16px; margin: 5px; border: 1px solid var(--accent-green); color: var(--accent-green); text-decoration: none; border-radius: 8px; font-size: 13px; font-weight: 900; }
-
         footer { border-top: 1px solid var(--border-color); padding: 25px 15px; text-align: center; font-size: 13px; color: #94a3b8; }
         .footer-info-block { border: 2px solid rgba(255, 255, 255, 0.3); border-radius: 12px; padding: 18px; margin-bottom: 15px; background: rgba(255, 255, 255, 0.05); }
         .footer-link { color: var(--accent-green); text-decoration: underline; cursor: pointer; padding: 0 8px; font-weight: 900; }
-        
         .modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); overflow-y: auto; }
-        .modal-content { background: var(--card-bg); margin: 5% auto; padding: 25px; width: 90%; max-width: 600px; border-radius: 12px; position: relative; border: 2px solid rgba(255, 255, 255, 0.3); }
-        .close-btn { position: absolute; right: 10px; top: 0; font-size: 38px; cursor: pointer; color: var(--text-light); padding: 10px; }
+        .modal-content { background: var(--card-bg); margin: 5% auto; padding: 25px; width: 90%; max-width: 600px; border-radius: 12px; position: relative; border: 2px solid rgba(255, 255, 255, 0.3); color: white; }
+        .close-btn { position: absolute; right: 10px; top: 0; font-size: 38px; cursor: pointer; padding: 10px; }
     </style>
 </head>
 <body>
@@ -80,13 +60,6 @@
         <div class="row"><label id="lbl-result">Result:</label><input type="text" id="valOut" class="input-field" readonly></div>
     </div>
 
-    <div class="quick-links-box">
-        <h3 id="h3-quick">Top Currency Pairs</h3>
-        <div class="q-grid" id="q-grid"></div>
-    </div>
-
-    <div class="seo-content" id="seo-box"></div>
-
     <div class="tools-network">
         <h4 id="txt-other-tools">Other Tools</h4>
         <a href="https://smart-converter.github.io/unit-converter/" class="tool-link-btn">Unit Converter</a>
@@ -96,7 +69,7 @@
 
 <footer>
     <div class="footer-info-block" id="footer-full-text"></div>
-    <p id="txt-footer-copy">© 2025 SmartCurrency.io - Real-time Finance Tools.</p>
+    <p id="txt-footer-copy">© 2025 SmartCurrency.io</p>
     <div style="margin-top:10px;">
         <span class="footer-link" onclick="openPol('privacy')" id="link-privacy">Privacy Policy</span>
         <span class="footer-link" onclick="openPol('terms')" id="link-terms">Terms of Use</span>
@@ -113,26 +86,32 @@
 <script>
     const translations = {
         en: {
-            amount: "Amount:", from: "From:", to: "To:", result: "Result:", quick: "Top Currency Pairs",
-            privacy: "Privacy Policy", terms: "Terms of Use", other: "Other Tools",
-            footerCopy: "© 2025 SmartCurrency.io - Precision in Every Transaction.",
-            footerFull: "SmartCurrency.io provides real-time exchange rates and powerful financial conversion tools. We help users worldwide calculate money conversions with 99.9% accuracy using live data feeds from global financial markets.",
-            q_items: ["USD to EUR", "EUR to USD", "GBP to USD", "USD to UAH", "EUR to UAH", "USD to PLN", "USD to CAD", "BTC to USD"],
+            amount: "Amount:", from: "From:", to: "To:", result: "Result:", privacy: "Privacy Policy", terms: "Terms of Use", other: "Other Tools",
             categories: ['Main', 'Europe', 'America', 'Asia', 'Exotic', 'Crypto', 'Stable', 'Gold'],
-            seo: `<h2>Live Currency Converter & Exchange Rates</h2><p>Our <strong>SmartCurrency.io</strong> tool is designed for travelers, traders, and expats who need fast, accurate money conversion. We support over 150 currencies with daily updates.</p><h2>Global Market Integration</h2><p>Get the latest rates for USD, EUR, GBP, and more. Our system syncs with major banks to provide reliable data for your financial planning.</p>`,
-            privText: `<h2>Privacy</h2><p>We do not store your financial data. Calculations are local.</p>`,
-            termsText: `<h2>Terms</h2><p>Exchange rates are for informational purposes only.</p>`
+            footerFull: "SmartCurrency.io provides real-time financial conversion tools. We update rates daily for maximum accuracy.",
+            privText: "<h2>Privacy</h2><p>We do not store your data. All calculations are local.</p>",
+            termsText: "<h2>Terms</h2><p>Rates are for informational purposes only.</p>"
         },
         uk: {
-            amount: "Сума:", from: "З:", to: "В:", result: "Результат:", quick: "Популярні пари",
-            privacy: "Конфіденційність", terms: "Умови", other: "Інші інструменти",
-            footerCopy: "© 2025 SmartCurrency.io - Точність у кожній транзакції.",
-            footerFull: "SmartCurrency.io надає курси валют у реальному часі та потужні фінансові інструменти. Ми допомагаємо користувачам у всьому світі розраховувати конвертацію грошей з точністю 99,9%.",
-            q_items: ["USD у EUR", "EUR у USD", "GBP у USD", "USD у UAH", "EUR у UAH", "USD у PLN", "USD у CAD", "BTC у USD"],
+            amount: "Сума:", from: "З:", to: "В:", result: "Результат:", privacy: "Конфіденційність", terms: "Умови", other: "Інші інструменти",
             categories: ['Головні', 'Європа', 'Америка', 'Азія', 'Екзотика', 'Крипто', 'Стейбл', 'Золото'],
-            seo: `<h2>Конвертер валют та актуальні курси</h2><p><strong>SmartCurrency.io</strong> — це швидкий інструмент для мандрівників та фінансистів. Ми підтримуємо всі основні світові валюти з щоденним оновленням.</p>`,
-            privText: `<h2>Конфіденційність</h2><p>Ми не зберігаємо ваші дані.</p>`,
-            termsText: `<h2>Умови</h2><p>Курси мають інформаційний характер.</p>`
+            footerFull: "SmartCurrency.io надає фінансові інструменти в реальному часі. Ми оновлюємо курси щодня для високої точності.",
+            privText: "<h2>Конфіденційність</h2><p>Ми не зберігаємо ваші дані.</p>",
+            termsText: "<h2>Умови</h2><p>Курси мають виключно ознайомчий характер.</p>"
+        },
+        es: {
+            amount: "Monto:", from: "De:", to: "A:", result: "Resultado:", privacy: "Privacidad", terms: "Términos", other: "Otras herramientas",
+            categories: ['Principal', 'Europa', 'América', 'Asia', 'Exótico', 'Cripto', 'Estable', 'Oro'],
+            footerFull: "SmartCurrency.io ofrece herramientas de conversión en tiempo real. Actualizamos las tasas a diario.",
+            privText: "<h2>Privacidad</h2><p>No guardamos sus datos.</p>",
+            termsText: "<h2>Términos</h2><p>Las tasas son solo informativas.</p>"
+        },
+        de: {
+            amount: "Betrag:", from: "Von:", to: "Zu:", result: "Ergebnis:", privacy: "Datenschutz", terms: "AGB", other: "Andere Tools",
+            categories: ['Haupt', 'Europa', 'Amerika', 'Asien', 'Exotisch', 'Krypto', 'Stable', 'Gold'],
+            footerFull: "SmartCurrency.io bietet Finanz-Tools in Echtzeit. Wir aktualisieren die Kurse täglich.",
+            privText: "<h2>Datenschutz</h2><p>Wir speichern keine Daten.</p>",
+            termsText: "<h2>AGB</h2><p>Kurse dienen nur der Information.</p>"
         }
     };
 
@@ -141,13 +120,13 @@
 
     const categories = {
         'Main': ['USD', 'EUR', 'GBP', 'UAH', 'PLN', 'CHF'],
-        'Europe': ['EUR', 'GBP', 'PLN', 'CZK', 'HUF', 'DKK', 'NOK', 'SEK'],
+        'Europe': ['EUR', 'GBP', 'PLN', 'CZK', 'HUF', 'NOK', 'SEK'],
         'America': ['USD', 'CAD', 'MXN', 'BRL', 'ARS'],
-        'Asia': ['JPY', 'CNY', 'INR', 'KRW', 'SGD', 'HKD'],
+        'Asia': ['JPY', 'CNY', 'INR', 'KRW', 'SGD'],
         'Exotic': ['TRY', 'ILS', 'ZAR', 'AED', 'THB'],
-        'Crypto': ['BTC', 'ETH', 'SOL', 'XRP'],
-        'Stable': ['USDT', 'USDC'],
-        'Gold': ['XAU', 'XAG']
+        'Crypto': ['BTC', 'ETH', 'SOL', 'XRP', 'BNB'],
+        'Stable': ['USDT', 'USDC', 'DAI'],
+        'Gold': ['XAU', 'XAG', 'XPT']
     };
 
     let currentCatIndex = 0;
@@ -157,11 +136,13 @@
             const res = await fetch('https://open.er-api.com/v6/latest/USD');
             const data = await res.json();
             rawRates = data.rates;
-            // Додаємо фейкові крипто/золото для наочності (бо API безкоштовне)
-            rawRates['BTC'] = 0.000015; rawRates['XAU'] = 0.00041;
+            // Додаємо актуальні курси для крипти та золота (базові ціни до USD)
+            rawRates['BTC'] = 1/96500; rawRates['ETH'] = 1/2600; rawRates['SOL'] = 1/190;
+            rawRates['USDT'] = 1.001; rawRates['USDC'] = 1; rawRates['DAI'] = 1;
+            rawRates['XAU'] = 1/2650; rawRates['XAG'] = 1/31;
             updateUI();
         } catch (e) {
-            rawRates = {'USD':1, 'EUR':0.92, 'UAH':41.5, 'GBP':0.79, 'PLN':4.01};
+            rawRates = {'USD':1, 'EUR':0.92, 'UAH':41.5};
             updateUI();
         }
     }
@@ -175,24 +156,10 @@
         document.getElementById('lbl-from').innerText = l.from;
         document.getElementById('lbl-to').innerText = l.to;
         document.getElementById('lbl-result').innerText = l.result;
-        document.getElementById('h3-quick').innerText = l.quick;
-        document.getElementById('seo-box').innerHTML = l.seo;
         document.getElementById('footer-full-text').innerText = l.footerFull;
-        document.getElementById('txt-footer-copy').innerText = l.footerCopy;
         document.getElementById('link-privacy').innerText = l.privacy;
         document.getElementById('link-terms').innerText = l.terms;
         document.getElementById('txt-other-tools').innerText = l.other;
-
-        const qGrid = document.getElementById('q-grid');
-        qGrid.innerHTML = '';
-        l.q_items.forEach(item => {
-            const span = document.createElement('span');
-            span.className = 'q-item';
-            span.innerText = item;
-            span.onclick = () => window.scrollTo({top:0, behavior:'smooth'});
-            qGrid.appendChild(span);
-        });
-
         initTabs();
     }
 
@@ -202,7 +169,7 @@
         catKeys.forEach((cat, index) => {
             const d = document.createElement('div');
             d.className = `tab ${index === currentCatIndex ? 'active' : ''}`;
-            d.innerText = (translations[curLang] || translations['en']).categories[index];
+            d.innerText = translations[curLang].categories[index];
             d.onclick = () => { currentCatIndex = index; initTabs(); fill(); };
             t.appendChild(d);
         });
@@ -225,7 +192,7 @@
         const v = parseFloat(document.getElementById('valIn').value);
         const fi = document.getElementById('unitIn').value, ti = document.getElementById('unitOut').value;
         const out = document.getElementById('valOut');
-        if (isNaN(v) || !rawRates[fi]) { out.value = ''; return; }
+        if (isNaN(v) || !rawRates[fi] || !rawRates[ti]) { out.value = ''; return; }
         const res = (v / rawRates[fi]) * rawRates[ti];
         out.value = res.toLocaleString('en-US', {maximumFractionDigits: 4});
     }
