@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter - SmartFinance</title>
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --accent-green: #22c55e;
+            --text-light: #f8fafc;
+            --border-color: #334155;
+            --border-glow: rgba(255, 255, 255, 0.3);
+        }
+
+        body { font-family: -apple-system, system-ui, sans-serif; margin: 0; padding: 0; background-color: var(--bg-dark); color: var(--text-light); -webkit-font-smoothing: antialiased; }
+        .top-header { background-color: #166534; padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-color); }
+        .top-header h1 { margin: 0; font-size: 20px; font-weight: 900; color: white; }
+        .lang-switcher { background: var(--bg-dark); border: 2px solid white; color: white; padding: 4px 8px; border-radius: 8px; font-size: 15px; font-weight: 800; cursor: pointer; }
+        .container { max-width: 800px; margin: 0 auto; padding: 5px; box-sizing: border-box; min-height: 100vh; }
+        .converter-box { border: 1px solid var(--border-color); padding: 30px 20px; background: var(--card-bg); border-radius: 12px; margin: 15px 0 5px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+        .row { display: flex; align-items: center; margin-bottom: 18px; }
+        .row label { width: 150px; font-size: 17px; color: #cbd5e1; font-weight: 900; line-height: 1.2; }
+        .input-field { flex: 1; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 18px; font-weight: 800; width: 100%; box-sizing: border-box; height: 48px; background: #fff; color: #000; }
+        .result-field { background: #f0fdf4 !important; color: #166534 !important; border-color: #22c55e !important; }
+
+        .tools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0; }
+        .tool-link { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-color); color: var(--accent-green); padding: 12px; border-radius: 8px; text-decoration: none; text-align: center; font-size: 13px; font-weight: 800; transition: 0.3s; }
+        .tool-link:hover { background: var(--accent-green); color: white; }
+        .tool-link-wide { grid-column: span 2; }
+
+        footer { border-top: 1px solid var(--border-color); padding: 25px 15px; text-align: center; font-size: 13px; color: #94a3b8; }
+        .footer-info-block { border: 2px solid var(--border-glow); border-radius: 12px; padding: 18px; margin-bottom: 15px; background: rgba(255, 255, 255, 0.05); }
+        .footer-link { color: var(--accent-green); text-decoration: underline; cursor: pointer; padding: 0 8px; font-weight: 900; }
+        
+        .modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); overflow-y: auto; }
+        .modal-content { background: var(--card-bg); margin: 5% auto; padding: 25px; width: 90%; max-width: 600px; border-radius: 12px; position: relative; color: var(--text-light); border: 2px solid var(--border-glow); line-height: 1.6; }
+        .close-btn { position: absolute; right: 10px; top: 0; font-size: 38px; cursor: pointer; padding: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="top-header">
+    <h1>SmartFinance.io</h1>
+    <select class="lang-switcher" onchange="changeLang(this.value)" id="langSelect">
+        <option value="en">English</option>
+        <option value="uk">Українська</option>
+        <option value="es">Español</option>
+        <option value="de">Deutsch</option>
+    </select>
+</div>
+
+<div class="container">
+    <div class="converter-box">
+        <div class="row"><label id="lbl-amount">Amount:</label><input type="number" id="amount" class="input-field" value="100" oninput="calculate()"></div>
+        <div class="row"><label id="lbl-rate">Exchange Rate:</label><input type="number" id="rate" class="input-field" value="1.10" step="0.01" oninput="calculate()"></div>
+        
+        <div class="row" style="margin-top:25px; border-top: 1px solid var(--border-color); padding-top: 20px;">
+            <label id="lbl-converted" style="color: var(--accent-green);">Converted:</label>
+            <input type="text" id="result" class="input-field result-field" readonly>
+        </div>
+    </div>
+
+    <h3 style="text-align: center; font-size: 14px; color: #64748b; text-transform: uppercase; margin-top: 30px;" id="txt-other">Other Tools</h3>
+    <div class="tools-grid">
+        <a href="#" class="tool-link" id="lnk-unit">Unit Converter</a>
+        <a href="#" class="tool-link" id="lnk-perc">Percentage Calc</a>
+        <a href="#" class="tool-link" id="lnk-vat">VAT Calculator</a>
+        <a href="#" class="tool-link" id="lnk-loan">Loan Calculator</a>
+        <a href="#" class="tool-link" id="lnk-disc">Discount Calc</a>
+        <a href="#" class="tool-link" id="lnk-tip">Tip Calculator</a>
+        <a href="#" class="tool-link tool-link-wide" id="lnk-bmi">BMI Calculator</a>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-info-block" id="footer-text"></div>
+    <p>© 2025 SmartFinance.io</p>
+    <div style="margin-top:10px;">
+        <span class="footer-link" onclick="openPol('privacy')" id="link-privacy">Privacy</span>
+        <span class="footer-link" onclick="openPol('terms')" id="link-terms">Terms</span>
+    </div>
+</footer>
+
+<div id="siteModal" class="modal" onclick="if(event.target == this) closeModal()">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">×</span>
+        <div id="modalBody"></div>
+    </div>
+</div>
+
+<script>
+    const translations = {
+        en: {
+            amount: "Amount:", rate: "Exchange Rate:", converted: "Converted:",
+            other: "Other Tools", footer: "Quick Currency Converter — calculate exchange rates instantly.",
+            unit: "Unit Converter", perc: "Percentage Calc", vat: "VAT Calculator", loan: "Loan Calculator", 
+            disc: "Discount Calc", tip: "Tip Calculator", bmi: "BMI Calculator",
+            privacy: "Privacy Policy", terms: "Terms of Use",
+            privText: "<h2>Privacy</h2><p>We do not store your financial data.</p>",
+            termsText: "<h2>Terms</h2><p>Rates are for informational purposes.</p>"
+        },
+        uk: {
+            amount: "Сума:", rate: "Курс валют:", converted: "Результат:",
+            other: "Інші інструменти", footer: "Конвертер валют — миттєвий розрахунок за вашим курсом.",
+            unit: "Конвертер", perc: "Відсотки", vat: "Калькулятор ПДВ", loan: "Кредити", 
+            disc: "Знижки", tip: "Чайові", bmi: "Індекс маси тіла",
+            privacy: "Конфіденційність", terms: "Умови",
+            privText: "<h2>Конфіденційність</h2><p>Ми не зберігаємо ваші дані.</p>",
+            termsText: "<h2>Умови</h2><p>Курси мають інформаційний характер.</p>"
+        },
+        es: {
+            amount: "Cantidad:", rate: "Tipo de cambio:", converted: "Convertido:",
+            other: "Herramientas", footer: "Conversor de divisas: rápido y fácil.",
+            unit: "Convertidor", perc: "Porcentajes", vat: "IVA", loan: "Préstamos", 
+            disc: "Descuento", tip: "Propina", bmi: "IMC",
+            privacy: "Privacidad", terms: "Términos",
+            privText: "<h2>Privacidad</h2><p>Sin almacenamiento de datos.</p>",
+            termsText: "<h2>Términos</h2><p>Solo para información.</p>"
+        },
+        de: {
+            amount: "Betrag:", rate: "Wechselkurs:", converted: "Umgerechnet:",
+            other: "Andere Tools", footer: "Währungsrechner — berechnen Sie Kurse sofort.",
+            unit: "Konverter", perc: "Prozente", vat: "MwSt", loan: "Kredit", 
+            disc: "Rabatt", tip: "Trinkgeld", bmi: "BMI",
+            privacy: "Datenschutz", terms: "AGB",
+            privText: "<h2>Datenschutz</h2><p>Keine Datenspeicherung.</p>",
+            termsText: "<h2>AGB</h2><p>Nur zur Information.</p>"
+        }
+    };
+
+    let curLang = localStorage.getItem('langCur') || 'en';
+
+    function changeLang(lang) {
+        curLang = lang;
+        localStorage.setItem('langCur', lang);
+        updateUI();
+    }
+
+    function updateUI() {
+        const t = translations[curLang];
+        document.getElementById('langSelect').value = curLang;
+        document.getElementById('lbl-amount').innerText = t.amount;
+        document.getElementById('lbl-rate').innerText = t.rate;
+        document.getElementById('lbl-converted').innerText = t.converted;
+        document.getElementById('txt-other').innerText = t.other;
+        document.getElementById('footer-text').innerText = t.footer;
+        document.getElementById('link-privacy').innerText = t.privacy;
+        document.getElementById('link-terms').innerText = t.terms;
+        
+        document.getElementById('lnk-unit').innerText = t.unit;
+        document.getElementById('lnk-perc').innerText = t.perc;
+        document.getElementById('lnk-vat').innerText = t.vat;
+        document.getElementById('lnk-loan').innerText = t.loan;
+        document.getElementById('lnk-disc').innerText = t.disc;
+        document.getElementById('lnk-tip').innerText = t.tip;
+        document.getElementById('lnk-bmi').innerText = t.bmi;
+        calculate();
+    }
+
+    function calculate() {
+        const amount = parseFloat(document.getElementById('amount').value) || 0;
+        const rate = parseFloat(document.getElementById('rate').value) || 0;
+        const result = amount * rate;
+        document.getElementById('result').value = result.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    }
+
+    function openPol(type) {
+        const t = translations[curLang];
+        document.getElementById('modalBody').innerHTML = type === 'privacy' ? t.privText : t.termsText;
+        document.getElementById('siteModal').style.display = 'block';
+    }
+    function closeModal() { document.getElementById('siteModal').style.display = 'none'; }
+    updateUI();
+</script>
+</body>
+</html>
