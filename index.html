@@ -9,7 +9,7 @@
         :root {
             --bg-dark: #0f172a;
             --card-bg: #1e293b;
-            --accent-green: #4ade80; /* Покращений контраст для 100% Accessibility */
+            --accent-green: #4ade80;
             --text-light: #f8fafc;
             --text-muted: #cbd5e1;
             --border-color: #334155;
@@ -154,20 +154,20 @@
             amount: "Monto:", from: "De:", to: "A:", result: "Resultado:", other: "Otras herramientas", privacy: "Privacidad", terms: "Términos",
             unit: "Unidades", perc: "Porcentaje", vat: "IVA", loan: "Préstamo", disc: "Descuento", bmi: "BMI", tip: "Propina",
             categories: ['Principal', 'Europa', 'América', 'Asia', 'Exótico', 'Cripto', 'Estable', 'Oro'],
-            footer: "SmartCurrency.io ofrece conversión de divisas de alta precisión. Actualizamos las tasas diariamente para garantizar datos financieros precisos.",
-            seo: `<h2>Datos financieros globales</h2><p>Siga los mercados con facilidad. Nuestro conversor admite más de 150 divisas.</p><h2>Cripto y Metales</h2><p>Calcule tasas para Bitcoin y Oro al instante.</p>`,
-            privText: "<h2>Privacidad</h2><p>Sus datos no salen de su dispositivo. Los cálculos se realizan localmente.</p>", 
-            termsText: "<h2>Términos</h2><p>Las tasas son informativas. Consulte con su banco para acuerdos oficiales.</p>"
+            footer: "SmartCurrency.io es su destino principal para la conversión de divisas de alta precisión. Ofrecemos tipos de cambio en tiempo real para monedas tradicionales, criptomonedas y metales preciosos. Nuestros algoritmos se actualizan diariamente para garantizar que siempre tenga los datos financieros más precisos disponibles para sus transacciones.",
+            seo: `<h2>Datos financieros globales</h2><p>Siga los mercados con facilidad. Nuestro conversor admite más de 150 divisas, incluyendo pares principales y exóticos.</p><h2>Cripto y Metales</h2><p>Calcule tasas para Bitcoin (BTC), Ethereum (ETH) y materias primas como Oro (XAU) o Plata (XAG) al instante.</p>`,
+            privText: "<h2>Privacidad</h2><p>Su privacidad es primordial. Todos los cálculos se realizan localmente en su navegador y no se almacenan datos personales.</p>", 
+            termsText: "<h2>Términos</h2><p>Las tasas proporcionadas son solo para fines informativos. Para transacciones oficiales, consulte con su institución financiera.</p>"
         },
         de: {
             desc: "Smart Currency Express - Echtzeit-Wechselkurse für USD, EUR, Krypto und Gold. Schnelle Umrechnung.",
             amount: "Betrag:", from: "Von:", to: "Zu:", result: "Ergebnis:", other: "Andere Elite-Tools", privacy: "Datenschutz", terms: "AGB",
             unit: "Einheiten", perc: "Prozent", vat: "MwSt", loan: "Kredit", disc: "Rabatt", bmi: "BMI", tip: "Trinkgeld",
             categories: ['Haupt', 'Europa', 'Amerika', 'Asien', 'Exotisch', 'Krypto', 'Stable', 'Gold'],
-            footer: "SmartCurrency.io ist Ihr Ziel für hochpräzise Währungsumrechnung. Wir bieten Echtzeitkurse für Währungen und Rohstoffe.",
-            seo: `<h2>Finanzdaten in Echtzeit</h2><p>Verfolgen Sie die globalen Märkte mühelos.</p><h2>Krypto & Edelmetalle</h2><p>Berechnen Sie Kurse für Bitcoin und Gold sofort.</p>`,
-            privText: "<h2>Datenschutz</h2><p>Ihre Daten bleiben auf Ihrem Gerät.</p>", 
-            termsText: "<h2>AGB</h2><p>Kurse dienen nur zur Information.</p>"
+            footer: "SmartCurrency.io ist Ihre erste Adresse für hochpräzise Währungsumrechnung. Wir bieten Echtzeit-Wechselkurse für traditionelle Währungen, Kryptowährungen und Edelmetalle. Unsere Algorithmen werden täglich aktualisiert, um sicherzustellen, dass Sie für Ihre Reisen oder Geschäfte immer die genauesten Finanzdaten zur Verfügung haben.",
+            seo: `<h2>Finanzdaten in Echtzeit</h2><p>Verfolgen Sie die globalen Märkte mühelos. Unser Konverter unterstützt über 150 Währungen, einschließlich wichtiger und exotischer Paare.</p><h2>Krypto & Edelmetalle</h2><p>Berechnen Sie Kurse für Bitcoin (BTC), Ethereum (ETH) und Rohstoffe wie Gold (XAU) oder Silber (XAG) sofort.</p>`,
+            privText: "<h2>Datenschutz</h2><p>Ihre Privatsphäre ist uns wichtig. Alle Berechnungen werden lokal in Ihrem Browser durchgeführt, es werden keine Daten gespeichert.</p>", 
+            termsText: "<h2>AGB</h2><p>Die bereitgestellten Kurse dienen nur zu Informationszwecken. Für offizielle Abschlüsse konsultieren Sie bitte Ihr Finanzinstitut.</p>"
         }
     };
 
@@ -218,7 +218,10 @@
         document.getElementById('seo-box').innerHTML = l.seo;
         
         const toolIds = ['unit', 'perc', 'vat', 'loan', 'disc', 'bmi', 'tip'];
-        toolIds.forEach(id => document.getElementById('lnk-' + id).innerText = l[id]);
+        toolIds.forEach(id => {
+            const el = document.getElementById('lnk-' + id);
+            if (el) el.innerText = l[id];
+        });
         
         initTabs();
     }
