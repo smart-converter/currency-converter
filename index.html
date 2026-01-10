@@ -18,81 +18,73 @@
 
         body { font-family: -apple-system, system-ui, sans-serif; margin: 0; padding: 0; background-color: var(--bg-dark); color: var(--text-light); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
         
-        .top-header { background-color: #166534; padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-color); }
+        /* Виправлення Layout Shift для заголовка */
+        .top-header { background-color: #166534; padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-color); min-height: 48px; }
         .top-header h1 { margin: 0; font-size: 20px; font-weight: 900; color: white; }
         
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
 
         .lang-switcher { background: var(--bg-dark); border: 2px solid white; color: white; padding: 4px 8px; border-radius: 8px; font-size: 15px; cursor: pointer; font-weight: 800; outline: none; min-height: 44px; }
-        .lang-switcher option { color: #000; background: #fff; }
         
         .container { max-width: 800px; margin: 0 auto; padding: 5px; box-sizing: border-box; }
         
-        .tabs-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background-color: #14532d; border: 1px solid #14532d; margin: 15px 0 10px; border-radius: 8px; overflow: hidden; }
+        /* FIX CLS: Резервуємо висоту для вкладок (44px висота + 15px margin) */
+        .tabs-grid-wrapper { min-height: 104px; margin: 15px 0 10px; }
+        .tabs-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background-color: #14532d; border: 1px solid #14532d; border-radius: 8px; overflow: hidden; }
         .tab { background: #166534; color: #fff; height: 44px; text-align: center; cursor: pointer; font-size: 10px; font-weight: 900; text-transform: uppercase; border: none; display: flex; align-items: center; justify-content: center; font-family: inherit; width: 100%; }
         .tab.active { background: #fff; color: #166534; }
         
-        .ad-space { background: rgba(255, 255, 255, 0.05); border: 1px dashed var(--border-color); margin: 10px 0; text-align: center; padding: 15px; color: var(--text-muted); font-size: 11px; height: 90px; display: flex; align-items: center; justify-content: center; border-radius: 8px; box-sizing: border-box; }
+        /* FIX CLS: Резервуємо висоту для реклами */
+        .ad-space { background: rgba(255, 255, 255, 0.05); border: 1px dashed var(--border-color); margin: 10px 0; text-align: center; color: var(--text-muted); font-size: 11px; height: 90px; display: flex; align-items: center; justify-content: center; border-radius: 8px; box-sizing: border-box; }
         
         .converter-box { border: 1px solid var(--border-color); padding: 30px 20px; background: var(--card-bg); border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
         .row { display: flex; align-items: center; margin-bottom: 18px; }
-        .row label { width: 140px; font-size: 16px; color: #cbd5e1; font-weight: 700; }
+        .row label { width: 120px; font-size: 16px; color: #fff; font-weight: 700; }
         .input-field { flex: 1; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 19px; font-weight: 800; background: #fff; color: #000; outline: none; width: 100%; box-sizing: border-box; height: 48px; }
-        #valOut { background: #f0fdf4 !important; color: #166534 !important; border-color: var(--accent-green) !important; font-weight: 900; }
+        #valOut { background: #f0fdf4 !important; color: #14532d !important; border-color: var(--accent-green) !important; font-weight: 900; }
         
-        .seo-content { padding: 15px; line-height: 1.7; font-size: 14px; color: var(--text-muted); }
+        .seo-content { padding: 15px; line-height: 1.7; font-size: 14px; color: var(--text-muted); min-height: 100px; }
         .seo-content h2 { color: var(--accent-green); font-size: 19px; margin: 20px 0 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 5px; font-weight: 900; }
 
         .tools-network { padding: 20px 15px; text-align: center; border-top: 1px solid var(--border-color); margin-top: 20px; }
-        .tools-network h2 { margin: 0 0 15px 0; color: #94a3b8; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; font-weight: 800; }
+        .tools-network h2 { margin: 0 0 15px 0; color: #cbd5e1; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; font-weight: 800; }
         .tools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .tool-link-btn { padding: 12px 5px; border: 2px solid var(--accent-green); color: var(--accent-green); text-decoration: none; border-radius: 8px; font-size: 12px; font-weight: 900; display: flex; align-items: center; justify-content: center; height: 48px; box-sizing: border-box; }
+        .tool-link-btn { padding: 12px 5px; border: 2px solid var(--accent-green); color: var(--accent-green); text-decoration: none; border-radius: 8px; font-size: 12px; font-weight: 900; display: flex; align-items: center; justify-content: center; min-height: 48px; box-sizing: border-box; }
         .tool-link-btn:last-child:nth-child(odd) { grid-column: 1 / span 2; justify-self: center; width: calc(50% - 5px); }
 
         footer { border-top: 1px solid var(--border-color); padding: 30px 15px; text-align: center; font-size: 13px; color: var(--text-muted); box-sizing: border-box; width: 100%; }
-        .footer-info-block { 
-            border: 2px solid var(--border-glow); 
-            border-radius: 12px; 
-            padding: 18px; 
-            margin: 0 auto 20px auto; 
-            background: rgba(255, 255, 255, 0.05); 
-            text-align: left; 
-            max-width: calc(100% - 20px); 
-            width: 480px; 
-            box-sizing: border-box; 
-            line-height: 1.6; 
-        }
+        .footer-info-block { border: 2px solid var(--border-glow); border-radius: 12px; padding: 18px; margin: 0 auto 20px auto; background: rgba(255, 255, 255, 0.05); text-align: left; max-width: 480px; line-height: 1.6; }
         .footer-btn { background: none; border: none; color: var(--accent-green); text-decoration: underline; cursor: pointer; padding: 10px; font-weight: 900; font-family: inherit; font-size: 13px; min-height: 44px; }
         
         .modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); overflow-y: auto; }
-        .modal-content { background: var(--card-bg); margin: 10% auto; padding: 35px 25px 25px; width: 85%; max-width: 600px; border-radius: 12px; position: relative; border: 2px solid var(--border-glow); color: white; line-height: 1.6; }
-        .close-btn { position: absolute; right: 5px; top: 5px; font-size: 40px; cursor: pointer; padding: 10px 20px; background: none; border: none; color: var(--text-muted); font-weight: 300; min-height: 44px; }
+        .modal-content { background: var(--card-bg); margin: 10% auto; padding: 35px 25px 25px; width: 85%; max-width: 600px; border-radius: 12px; position: relative; border: 2px solid var(--border-glow); color: white; }
+        .close-btn { position: absolute; right: 5px; top: 5px; font-size: 40px; cursor: pointer; padding: 10px 20px; color: var(--text-muted); background: none; border: none; }
     </style>
 </head>
 <body>
 
 <header class="top-header">
     <h1>SmartCurrency.io</h1>
-    <div>
-        <label for="langSelect" class="sr-only">Select Language</label>
-        <select class="lang-switcher" onchange="changeLang(this.value)" id="langSelect">
-            <option value="en">English</option>
-            <option value="uk">Українська</option>
-            <option value="es">Español</option>
-            <option value="de">Deutsch</option>
-        </select>
-    </div>
+    <select class="lang-switcher" onchange="changeLang(this.value)" id="langSelect" aria-label="Select Language">
+        <option value="en">English</option>
+        <option value="uk">Українська</option>
+        <option value="es">Español</option>
+        <option value="de">Deutsch</option>
+    </select>
 </header>
 
 <main class="container">
-    <nav id="tabs" class="tabs-grid" aria-label="Currency Category"></nav>
-    <div class="ad-space" role="complementary">ADVERTISEMENT AREA</div>
+    <div class="tabs-grid-wrapper">
+        <nav id="tabs" class="tabs-grid" aria-label="Currency Category"></nav>
+    </div>
+    
+    <div class="ad-space">ADVERTISEMENT AREA</div>
     
     <div class="converter-box">
-        <div class="row"><label id="lbl-amount" for="valIn">Amount:</label><input type="number" id="valIn" class="input-field" value="100" oninput="calc()" aria-required="true"></div>
-        <div class="row"><label id="lbl-from" for="unitIn">From:</label><select id="unitIn" class="input-field" onchange="calc()"></select></div>
-        <div class="row"><label id="lbl-to" for="unitOut">To:</label><select id="unitOut" class="input-field" onchange="calc()"></select></div>
-        <div class="row"><label id="lbl-result" for="valOut">Result:</label><input type="text" id="valOut" class="input-field" readonly aria-live="polite"></div>
+        <div class="row"><label for="valIn" id="lbl-amount">Amount:</label><input type="number" id="valIn" class="input-field" value="100" oninput="calc()"></div>
+        <div class="row"><label for="unitIn" id="lbl-from">From:</label><select id="unitIn" class="input-field" onchange="calc()"></select></div>
+        <div class="row"><label for="unitOut" id="lbl-to">To:</label><select id="unitOut" class="input-field" onchange="calc()"></select></div>
+        <div class="row"><label for="valOut" id="lbl-result">Result:</label><input type="text" id="valOut" class="input-field" readonly aria-live="polite"></div>
     </div>
 
     <section class="seo-content" id="seo-box"></section>
@@ -114,15 +106,15 @@
 <footer>
     <div class="footer-info-block" id="footer-full-text"></div>
     <p>© 2026 SmartCurrency.io - Real-Time Conversion</p>
-    <nav aria-label="Legal navigation">
+    <div>
         <button class="footer-btn" onclick="openPol('privacy')" id="link-privacy">Privacy Policy</button>
         <button class="footer-btn" onclick="openPol('terms')" id="link-terms">Terms of Use</button>
-    </nav>
+    </div>
 </footer>
 
-<div id="siteModal" class="modal" onclick="if(event.target == this) closeModal()" aria-hidden="true" role="dialog" aria-modal="true">
+<div id="siteModal" class="modal" onclick="if(event.target == this) closeModal()">
     <div class="modal-content">
-        <button class="close-btn" onclick="closeModal()" aria-label="Close modal">×</button>
+        <button class="close-btn" onclick="closeModal()">×</button>
         <div id="modalBody"></div>
     </div>
 </div>
@@ -130,44 +122,40 @@
 <script>
     const translations = {
         en: {
-            desc: "Smart Currency Express - real-time exchange rates for USD, EUR, GBP, Crypto and Gold. Fast financial conversion.",
             amount: "Amount:", from: "From:", to: "To:", result: "Result:", other: "Other Elite Tools", privacy: "Privacy Policy", terms: "Terms of Use",
             unit: "Unit Converter", perc: "Percentage", vat: "VAT", loan: "Loan", disc: "Discount", bmi: "BMI", tip: "Tip",
             categories: ['Main', 'Europe', 'America', 'Asia', 'Exotic', 'Crypto', 'Stable', 'Gold'],
-            footer: "SmartCurrency.io is your premier destination for high-precision currency conversion. We provide real-time exchange rates across traditional currencies, cryptocurrencies, and precious metals. Our algorithms update daily to ensure that whether you're traveling or trading, you have the most accurate financial data available.",
-            seo: `<h2>Real-Time Financial Data</h2><p>Track global markets with ease. Our converter supports over 150 currencies including major pairs like EUR/USD, GBP/USD, and exotic ones.</p><h2>Crypto & Precious Metals</h2><p>Go beyond cash. Calculate rates for Bitcoin (BTC), Ethereum (ETH), and commodities like Gold (XAU) or Silver (XAG) instantly.</p>`,
-            privText: "<h2>Privacy Policy</h2><p>Your privacy is paramount. All calculations are performed in your browser, and no personal data is stored on our servers.</p>", 
-            termsText: "<h2>Terms of Use</h2><p>Rates provided are for informational purposes. For actual trading, please consult with your financial institution.</p>"
+            footer: "SmartCurrency.io is your premier destination for high-precision currency conversion. We provide real-time exchange rates across traditional currencies, cryptocurrencies, and precious metals. Our algorithms update daily to ensure that you have the most accurate financial data.",
+            seo: `<h2>Real-Time Financial Data</h2><p>Track global markets with ease. Our converter supports over 150 currencies including major pairs like EUR/USD and exotic ones.</p>`,
+            privText: "<h2>Privacy Policy</h2><p>Your privacy is paramount. All calculations are performed in your browser.</p>", 
+            termsText: "<h2>Terms of Use</h2><p>Rates provided are for informational purposes.</p>"
         },
         uk: {
-            desc: "Smart Currency Express - актуальні курси валют USD, EUR, GBP, криптовалют та золота. Швидка конвертація.",
-            amount: "Сума:", from: "З:", to: "В:", result: "Результат:", other: "Інші професійні інструменти", privacy: "Конфіденційність", terms: "Умови",
+            amount: "Сума:", from: "З:", to: "В:", result: "Результат:", other: "Інші інструменти", privacy: "Конфіденційність", terms: "Умови",
             unit: "Конвертер", perc: "Відсотки", vat: "ПДВ", loan: "Кредити", disc: "Знижки", bmi: "BMI", tip: "Чайові",
             categories: ['Головні', 'Європа', 'Америка', 'Азія', 'Екзотика', 'Крипто', 'Стейбл', 'Золото'],
-            footer: "SmartCurrency.io — ваш надійний сервіс для точної конвертації валют. Ми надаємо актуальні курси для традиційних валют, криптовалют та дорогоцінних металів. Дані оновлюються щодня, щоб ви мали доступ до найточнішої фінансової інформації для подорожей чи бізнесу.",
-            seo: `<h2>Фінансові дані в реальному часі</h2><p>Відстежуйте світові ринки з легкістю. Наш конвертер підтримує основні пари валют та екзотичні напрямки.</p><h2>Криптовалюти та золото</h2><p>Більше ніж просто готівка. Розраховуйте курс Bitcoin, Ethereum та дорогоцінних металів, таких як золото (XAU) чи срібло (XAG) миттєво.</p>`,
-            privText: "<h2>Політика конфіденційності</h2><p>Ваші дані залишаються на вашому пристрої. Усі розрахунки відбуваються локально у браузері.</p>", 
-            termsText: "<h2>Умови використання</h2><p>Курси надаються для ознайомлення. Для офіційних обмінів звертайтеся до банківських установ.</p>"
+            footer: "SmartCurrency.io — ваш сервіс для точної конвертації валют. Ми надаємо актуальні курси для валют, криптовалют та металів. Дані оновлюються щодня для вашої зручності.",
+            seo: `<h2>Фінансові дані</h2><p>Відстежуйте світові ринки. Наш конвертер підтримує понад 150 валют, включаючи EUR/USD та інші.</p>`,
+            privText: "<h2>Конфіденційність</h2><p>Усі розрахунки відбуваються локально у вашому браузері.</p>", 
+            termsText: "<h2>Умови</h2><p>Курси надаються виключно для ознайомлення.</p>"
         },
         es: {
-            desc: "Smart Currency Express: tipos de cambio en tiempo real para USD, EUR, Criptomonedas y Oro.",
             amount: "Monto:", from: "De:", to: "A:", result: "Resultado:", other: "Otras herramientas", privacy: "Privacidad", terms: "Términos",
             unit: "Unidades", perc: "Porcentaje", vat: "IVA", loan: "Préstamo", disc: "Descuento", bmi: "BMI", tip: "Propina",
             categories: ['Principal', 'Europa', 'América', 'Asia', 'Exótico', 'Cripto', 'Estable', 'Oro'],
-            footer: "SmartCurrency.io es su destino principal para la conversión de divisas de alta precisión. Ofrecemos tipos de cambio en tiempo real para monedas tradicionales, criptomonedas y metales preciosos. Nuestros algoritmos se actualizan diariamente para garantizar que siempre tenga los datos financieros más precisos disponibles para sus transacciones.",
-            seo: `<h2>Datos financieros globales</h2><p>Siga los mercados con facilidad. Nuestro conversor admite más de 150 divisas, incluyendo pares principales y exóticos.</p><h2>Cripto y Metales</h2><p>Calcule tasas para Bitcoin (BTC), Ethereum (ETH) y materias primas como Oro (XAU) o Plata (XAG) al instante.</p>`,
-            privText: "<h2>Privacidad</h2><p>Su privacidad es primordial. Todos los cálculos se realizan localmente en su navegador y no se almacenan datos personales.</p>", 
-            termsText: "<h2>Términos</h2><p>Las tasas proporcionadas son solo para fines informativos. Para transacciones oficiales, consulte con su institución financiera.</p>"
+            footer: "SmartCurrency.io es su destino principal para la conversión de divisas. Ofrecemos tipos de cambio en tiempo real para monedas tradicionales y criptomonedas.",
+            seo: `<h2>Datos en tiempo real</h2><p>Siga los mercados con facilidad. Nuestro conversor admite más de 150 divisas.</p>`,
+            privText: "<h2>Privacidad</h2><p>Todos los cálculos se realizan localmente en su navegador.</p>", 
+            termsText: "<h2>Términos</h2><p>Las tasas proporcionadas son solo para fines informativos.</p>"
         },
         de: {
-            desc: "Smart Currency Express - Echtzeit-Wechselkurse für USD, EUR, Krypto und Gold. Schnelle Umrechnung.",
-            amount: "Betrag:", from: "Von:", to: "Zu:", result: "Ergebnis:", other: "Andere Elite-Tools", privacy: "Datenschutz", terms: "AGB",
+            amount: "Betrag:", from: "Von:", to: "Zu:", result: "Ergebnis:", other: "Andere Tools", privacy: "Datenschutz", terms: "AGB",
             unit: "Einheiten", perc: "Prozent", vat: "MwSt", loan: "Kredit", disc: "Rabatt", bmi: "BMI", tip: "Trinkgeld",
             categories: ['Haupt', 'Europa', 'Amerika', 'Asien', 'Exotisch', 'Krypto', 'Stable', 'Gold'],
-            footer: "SmartCurrency.io ist Ihre erste Adresse für hochpräzise Währungsumrechnung. Wir bieten Echtzeit-Wechselkurse für traditionelle Währungen, Kryptowährungen und Edelmetalle. Unsere Algorithmen werden täglich aktualisiert, um sicherzustellen, dass Sie für Ihre Reisen oder Geschäfte immer die genauesten Finanzdaten zur Verfügung haben.",
-            seo: `<h2>Finanzdaten in Echtzeit</h2><p>Verfolgen Sie die globalen Märkte mühelos. Unser Konverter unterstützt über 150 Währungen, einschließlich wichtiger und exotischer Paare.</p><h2>Krypto & Edelmetalle</h2><p>Berechnen Sie Kurse für Bitcoin (BTC), Ethereum (ETH) und Rohstoffe wie Gold (XAU) oder Silber (XAG) sofort.</p>`,
-            privText: "<h2>Datenschutz</h2><p>Ihre Privatsphäre ist uns wichtig. Alle Berechnungen werden lokal in Ihrem Browser durchgeführt, es werden keine Daten gespeichert.</p>", 
-            termsText: "<h2>AGB</h2><p>Die bereitgestellten Kurse dienen nur zu Informationszwecken. Für offizielle Abschlüsse konsultieren Sie bitte Ihr Finanzinstitut.</p>"
+            footer: "SmartCurrency.io ist Ihre Adresse für hochpräzise Währungsumrechnung. Wir bieten Echtzeit-Wechselkurse für alle Währungen.",
+            seo: `<h2>Finanzdaten in Echtzeit</h2><p>Verfolgen Sie die globalen Märkte mühelos. Unser Konverter unterstützt über 150 Währungen.</p>`,
+            privText: "<h2>Datenschutz</h2><p>Alle Berechnungen werden lokal in Ihrem Browser durchgeführt.</p>", 
+            termsText: "<h2>AGB</h2><p>Die bereitgestellten Kurse dienen nur zu Informationszwecken.</p>"
         }
     };
 
@@ -190,9 +178,7 @@
             const res = await fetch('https://open.er-api.com/v6/latest/USD');
             const data = await res.json();
             rawRates = data.rates;
-            rawRates['BTC'] = 1/96500; rawRates['ETH'] = 1/2600; rawRates['SOL'] = 1/190;
-            rawRates['USDT'] = 1.001; rawRates['USDC'] = 1; rawRates['DAI'] = 1;
-            rawRates['XAU'] = 1/2650; rawRates['XAG'] = 1/31;
+            rawRates['BTC'] = 1/96500; rawRates['ETH'] = 1/2600; rawRates['XAU'] = 1/2650;
             updateUI();
         } catch (e) {
             rawRates = {'USD':1, 'EUR':0.92, 'UAH':41.5};
@@ -204,8 +190,6 @@
 
     function updateUI() {
         const l = translations[curLang] || translations.en;
-        document.documentElement.lang = curLang;
-        document.getElementById('meta-desc').content = l.desc;
         document.getElementById('langSelect').value = curLang;
         document.getElementById('lbl-amount').innerText = l.amount;
         document.getElementById('lbl-from').innerText = l.from;
@@ -217,10 +201,9 @@
         document.getElementById('txt-other-tools').innerText = l.other;
         document.getElementById('seo-box').innerHTML = l.seo;
         
-        const toolIds = ['unit', 'perc', 'vat', 'loan', 'disc', 'bmi', 'tip'];
-        toolIds.forEach(id => {
+        ['unit', 'perc', 'vat', 'loan', 'disc', 'bmi', 'tip'].forEach(id => {
             const el = document.getElementById('lnk-' + id);
-            if (el) el.innerText = l[id];
+            if(el) el.innerText = l[id];
         });
         
         initTabs();
@@ -228,12 +211,10 @@
 
     function initTabs() {
         const t = document.getElementById('tabs'); t.innerHTML = '';
-        const catKeys = Object.keys(categories);
-        catKeys.forEach((cat, index) => {
+        Object.keys(categories).forEach((cat, index) => {
             const btn = document.createElement('button');
             btn.className = `tab ${index === currentCatIndex ? 'active' : ''}`;
             btn.innerText = translations[curLang].categories[index];
-            btn.setAttribute('aria-label', `Category ${cat}`);
             btn.onclick = () => { currentCatIndex = index; initTabs(); fill(); };
             t.appendChild(btn);
         });
@@ -262,18 +243,11 @@
     }
 
     function openPol(type) {
-        const l = translations[curLang] || translations.en;
+        const l = translations[curLang];
         document.getElementById('modalBody').innerHTML = type === 'privacy' ? l.privText : l.termsText;
-        const modal = document.getElementById('siteModal');
-        modal.style.display = 'block';
-        modal.setAttribute('aria-hidden', 'false');
+        document.getElementById('siteModal').style.display = 'block';
     }
-
-    function closeModal() { 
-        const modal = document.getElementById('siteModal');
-        modal.style.display = 'none'; 
-        modal.setAttribute('aria-hidden', 'true');
-    }
+    function closeModal() { document.getElementById('siteModal').style.display = 'none'; }
 
     fetchRates();
 </script>
